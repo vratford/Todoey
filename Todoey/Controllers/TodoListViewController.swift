@@ -34,9 +34,10 @@ class TodoListViewController: UITableViewController {
         
         // Do any additional setup after loading the view, typically from a nib.
         
-//        if let items = defaults.array(forKey: "TodoListArray") as? [String] {
-//            itemArray = items
-//        }
+        if let items = defaults.array(forKey: "TodoListArray") as? [todoeyItems] {
+            itemArray = items
+    
+        }
     
         
     }
@@ -63,12 +64,7 @@ class TodoListViewController: UITableViewController {
         
         cell.accessoryType = item.done ? .checkmark : .none
         
-//        if itemArray[indexPath.row].done == true {
-//            cell.accessoryType = .checkmark
-//        } else {
-//            cell.accessoryType = .none
-//
-//        }
+
         
         return cell
     }
@@ -111,7 +107,6 @@ class TodoListViewController: UITableViewController {
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Create new Item"
             textField = alertTextField
-            
             
             
         }

@@ -12,7 +12,7 @@
 		513815E9203B546C007B5339 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 513815E7203B546C007B5339 /* Main.storyboard */; };
 		513815EB203B546C007B5339 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 513815EA203B546C007B5339 /* Assets.xcassets */; };
 		513815EE203B546C007B5339 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 513815EC203B546C007B5339 /* LaunchScreen.storyboard */; };
-		513815F6203E3421007B5339 /* TodoeyItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513815F5203E3421007B5339 /* TodoeyItems.swift */; };
+		513815F6203E3421007B5339 /* todoeyItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513815F5203E3421007B5339 /* todoeyItems.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,7 +23,7 @@
 		513815EA203B546C007B5339 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		513815ED203B546C007B5339 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		513815EF203B546C007B5339 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		513815F5203E3421007B5339 /* TodoeyItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoeyItems.swift; sourceTree = "<group>"; };
+		513815F5203E3421007B5339 /* todoeyItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = todoeyItems.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,7 +69,7 @@
 		513815F7203E3550007B5339 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				513815F5203E3421007B5339 /* TodoeyItems.swift */,
+				513815F5203E3421007B5339 /* todoeyItems.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -171,7 +171,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				513815F6203E3421007B5339 /* TodoeyItems.swift in Sources */,
+				513815F6203E3421007B5339 /* todoeyItems.swift in Sources */,
 				513815E6203B546C007B5339 /* TodoListViewController.swift in Sources */,
 				513815E4203B546C007B5339 /* AppDelegate.swift in Sources */,
 			);
