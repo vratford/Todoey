@@ -61,6 +61,9 @@ class TodoListViewController: UITableViewController {
         
 //        print(itemArray[indexPath.row])
         
+ 
+//        context.delete(itemArray[indexPath.row]) // order of sequence due to array starting at 0 ??
+//        itemArray.remove(at: indexPath.row)  // removes item
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done // Flip bool state to opposite
     
         saveItems()
@@ -81,7 +84,7 @@ class TodoListViewController: UITableViewController {
             // what will happen once the user clicks the Add Item button on our UIAlert
             
             
-            let newItem = Item(context: self.context)
+            let newItem = Item(context: self.context) // saves new item and insert into context
             newItem.title = textField.text!
             newItem.done = false
             self.itemArray.append(newItem)  // if field is nil then go on !
