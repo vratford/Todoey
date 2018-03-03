@@ -19,7 +19,7 @@ class TodoListViewController: UITableViewController {
     
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         
-        //        loadItems()
+                loadItems()
         
         // Do any additional setup after loading the view, typically from a nib.
         
@@ -37,9 +37,13 @@ class TodoListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:)))
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
         
         let item = itemArray[indexPath.row]
+        
+        cell.addGestureRecognizer(longPressRecognizer)
         
         cell.textLabel?.text = item.title
         
@@ -47,8 +51,6 @@ class TodoListViewController: UITableViewController {
         // value = condition ? valueIfTrue : valueIfFalse
         
         cell.accessoryType = item.done ? .checkmark : .none
-        
-
         
         return cell
     }
@@ -117,19 +119,41 @@ func saveItems() {
     self.tableView.reloadData()
     }
     
-//    func loadItems () {
-//        if let data = try? Data(contentsOf: dataFilePath!) {
-//            let decoder = PropertyListDecoder()
-//            do {
-//                  itemArray = try decoder.decode([Item].self, from: data)
-//            } catch {
-//                 print("Error decoding item array, \(error)")
-//            }
-//
-//        }
-//
-//    }
+    func loadItems () {
+        let request : NSFetchRequest<Item> = Item.fetchRequest()
+        do {
+        itemArray = try context.fetch(request)
+        } catch {
+            print("Error fetching data from context \(error)")
+        }
+    }
 
+    //MARK: - Updating items in Core Data
+    @objc func longPress(_ sender: UIGestureRecognizer) {
+        if sender.state == UIGestureRecognizerState.ended {
+            let longPressLocation = sender.location(in: self.tableView)
+            if let pressedIndexPath = self.tableView.indexPathForRow(at: longPressLocation) {
+                
+                var task = UITextField()
+                let alert = UIAlertController(title: "Modify Item", message: "", preferredStyle: .alert)
+                
+                let action = UIAlertAction(title: "Modify", style: .default) { (action) in
+                    self.itemArray[pressedIndexPath.row].setValue("\(task.text ?? "")", forKey: "title")
+                    self.saveItems()
+                    
+                }
+                alert.addTextField { (alertTextField) in
+                    task = alertTextField
+                    task.text = "\(self.itemArray[pressedIndexPath.row].title!)"
+                }
+                
+                alert.addAction(action)
+                
+                present(alert, animated: true, completion: nil)
+                
+            }
+        }
+    }
 }
 
 
