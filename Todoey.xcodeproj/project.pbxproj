@@ -14,6 +14,7 @@
 		513815EB203B546C007B5339 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 513815EA203B546C007B5339 /* Assets.xcassets */; };
 		513815EE203B546C007B5339 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 513815EC203B546C007B5339 /* LaunchScreen.storyboard */; };
 		5139BF6B204A091000E0B9CE /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5139BF69204A091000E0B9CE /* DataModel.xcdatamodeld */; };
+		518003BE2051F1AC000888CA /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518003BD2051F1AC000888CA /* Data.swift */; };
 		51A1EE66204E24AD0004B55E /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A1EE65204E24AD0004B55E /* CategoryViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +29,7 @@
 		513815ED203B546C007B5339 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		513815EF203B546C007B5339 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5139BF6A204A091000E0B9CE /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		518003BD2051F1AC000888CA /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		51A1EE65204E24AD0004B55E /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		7C7937C1FFB5C784F5D0328A /* Pods-Todoey.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Todoey.release.xcconfig"; path = "Pods/Target Support Files/Pods-Todoey/Pods-Todoey.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -87,6 +89,7 @@
 		513815F7203E3550007B5339 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				518003BD2051F1AC000888CA /* Data.swift */,
 				5139BF69204A091000E0B9CE /* DataModel.xcdatamodeld */,
 			);
 			path = Model;
@@ -258,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				51A1EE66204E24AD0004B55E /* CategoryViewController.swift in Sources */,
+				518003BE2051F1AC000888CA /* Data.swift in Sources */,
 				5139BF6B204A091000E0B9CE /* DataModel.xcdatamodeld in Sources */,
 				513815E6203B546C007B5339 /* TodoListViewController.swift in Sources */,
 				513815E4203B546C007B5339 /* AppDelegate.swift in Sources */,
