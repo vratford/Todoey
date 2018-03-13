@@ -142,50 +142,50 @@ class TodoListViewController: UITableViewController {
     }
 
     //MARK: - Modify existing items in Realm
-    @objc func longPress(_ sender: UIGestureRecognizer) {
-        if sender.state == UIGestureRecognizerState.ended {
-            let longPressLocation = sender.location(in: self.tableView)
-            if let pressedIndexPath = self.tableView.indexPathForRow(at: longPressLocation) {
-
-                var task = UITextField()
-                let alert = UIAlertController(title: "Modify Item", message: "", preferredStyle: .alert)
-
-                let action = UIAlertAction(title: "Modify", style: .default) { (action) in
-                    self.todoItems![pressedIndexPath.row].setValue("\(task.text ?? "")", forKey: "title")
-
-//                    if let item = todoItems![pressedIndexPath] {
-
-                            if let currrentCategory = self.selectedCategory {
-
-                                do {
-                                    try self.realm.write {
-                                    let newItem = Item() // saves new item and insert into Realm
-                                    newItem.title = task.text!
-                                    newItem.dateCreated = Date()
-//                                    currrentCategory.items.append(newItem)
-                            }
-                        } catch {
-                            print("Error saving item \(error)")
-                        }
-
-    
-
-
-                    self.tableView.reloadData()
-
-                }
-                alert.addTextField { (alertTextField) in
-                    task = alertTextField
-                    task.text = "\(self.todoItems![pressedIndexPath.row].title)"
-                }
-
-                alert.addAction(action)
-
-                present(alert, animated: true, completion: nil)
-
-            }
-        }
-    }
+//    @objc func longPress(_ sender: UIGestureRecognizer) {
+//        if sender.state == UIGestureRecognizerState.ended {
+//            let longPressLocation = sender.location(in: self.tableView)
+//            if let pressedIndexPath = self.tableView.indexPathForRow(at: longPressLocation) {
+//
+//                var task = UITextField()
+//                let alert = UIAlertController(title: "Modify Item", message: "", preferredStyle: .alert)
+//
+//                let action = UIAlertAction(title: "Modify", style: .default) { (action) in
+//                    self.todoItems![pressedIndexPath.row].setValue("\(task.text ?? "")", forKey: "title")
+//
+////                    if let item = todoItems![pressedIndexPath] {
+//
+//                            if let currrentCategory = self.selectedCategory {
+//
+//                                do {
+//                                    try self.realm.write {
+//                                    let newItem = Item() // saves new item and insert into Realm
+//                                    newItem.title = task.text!
+//                                    newItem.dateCreated = Date()
+////                                    currrentCategory.items.append(newItem)
+//                            }
+//                        } catch {
+//                            print("Error saving item \(error)")
+//                        }
+//
+//    
+//
+//
+//                    self.tableView.reloadData()
+//
+//                }
+//                alert.addTextField { (alertTextField) in
+//                    task = alertTextField
+//                    task.text = "\(self.todoItems![pressedIndexPath.row].title)"
+//                }
+//
+//                alert.addAction(action)
+//
+//                present(alert, animated: true, completion: nil)
+//
+//            }
+//        }
+//    }
 
     
 }
