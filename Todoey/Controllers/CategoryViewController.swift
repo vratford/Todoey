@@ -10,7 +10,7 @@ import UIKit
 import RealmSwift
 
 
-class CategoryViewController: UITableViewController {
+class CategoryViewController: SwipeTableViewController {
 
     let realm = try! Realm()
     
@@ -23,6 +23,8 @@ class CategoryViewController: UITableViewController {
         
         loadCategories()
         
+        tableView.rowHeight = 80.0
+        
     }
 
 
@@ -33,15 +35,10 @@ class CategoryViewController: UITableViewController {
         return categories?.count ?? 1  // return the Categories
     }
     
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-//        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:)))
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
-        
-//        let category = categories[indexPath.row] //not needed ?
-        
-//        cell.addGestureRecognizer(longPressRecognizer)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added Yet"
         
@@ -85,6 +82,23 @@ override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: Inde
         
         tableView.reloadData()
         
+    }
+    
+    //MARK: - Delete Data from Swipe
+    
+    override func updateModel(at indexPath: IndexPath) {
+        
+        super.updateModel(at: indexPath)
+        
+        if let categoryForDeletion = self.categories?[indexPath.row] {
+            do {
+                try self.realm.write {
+                    self.realm.delete(categoryForDeletion)
+                }
+            } catch {
+                print("Error deleting category, \(error)")
+            }
+        }
     }
     
     //MARK: - Add new Categories
