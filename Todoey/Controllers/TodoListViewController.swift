@@ -8,8 +8,9 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
-class TodoListViewController: UITableViewController {
+class TodoListViewController: SwipeTableViewController {
     
     var todoItems: Results<Item>?
     let realm = try! Realm ()
@@ -17,19 +18,63 @@ class TodoListViewController: UITableViewController {
     var selectedCategory : Category? {
         didSet {
             loadItems()
+            
         }
     }
+    @IBOutlet weak var searchBar: UISearchBar!
     
+    @IBOutlet weak var Category: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
     
         loadItems()
+        
+        tableView.rowHeight = 60.0
+        
+        tableView.separatorStyle = .none // removes the grey line between cells
+        
+        self.navigationController?.hidesNavigationBarHairline = true // hides the hairline on Navigation Bar
+        
     }
     
-
+    override func viewWillAppear(_ animated: Bool) {
+        
+        title = selectedCategory?.name
+        
+        guard let colorHex = selectedCategory?.cellColor else { fatalError() }
+        
+        updateNavBar(withHexCode: colorHex)
+            
+      
+        
+    }
     
-
+    override func viewWillDisappear(_ animated: Bool) {
+        
+        updateNavBar(withHexCode: "1D9BF6")
+        
+    }
+    
+    //MARK: - Nav Bar Setup Methods
+    
+    func updateNavBar(withHexCode colorHexCode: String) {
+        
+        guard let navBar = navigationController?.navigationBar else {fatalError("Navigation Controller does not exist")}
+        
+        guard let navBarColor = UIColor(hexString: colorHexCode) else { fatalError()}
+        
+        navBar.barTintColor = navBarColor
+        
+        navBar.tintColor = ContrastColorOf(navBarColor, returnFlat: true)
+        
+        navBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor : ContrastColorOf(navBarColor, returnFlat: true)]
+        
+        searchBar.barTintColor = navBarColor
+        
+    }
+    
+ 
     //MARK: - Tableview Datsource Methods, Configure tableView with numberOfRowsInSection and populate with itemArray.
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -37,16 +82,19 @@ class TodoListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-//        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:)))
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
-        
+
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+
         if let item = todoItems?[indexPath.row] {
             
-//            cell.addGestureRecognizer(longPressRecognizer)
-            
             cell.textLabel?.text = item.title
+            
+            if let color = UIColor(hexString: selectedCategory!.cellColor)?.darken(byPercentage: CGFloat(indexPath.row) / CGFloat(todoItems!.count)) {
+                cell.backgroundColor = color
+                cell.textLabel?.textColor = ContrastColorOf(color, returnFlat: true)
+                
+            }
+              
             
             // Ternary Operator ==>
             // value = condition ? valueIfTrue : valueIfFalse
@@ -66,7 +114,6 @@ class TodoListViewController: UITableViewController {
         if let item = todoItems? [indexPath.row] {
             do {
                 try realm.write {
-//                    realm.delete(item) // removed delete function to allow done
                     item.done = !item.done
                 }
             } catch {
@@ -141,33 +188,18 @@ class TodoListViewController: UITableViewController {
 
     }
 
-    //MARK: - Updating items in Core Data
-//    @objc func longPress(_ sender: UIGestureRecognizer) {
-//        if sender.state == UIGestureRecognizerState.ended {
-//            let longPressLocation = sender.location(in: self.tableView)
-//            if let pressedIndexPath = self.tableView.indexPathForRow(at: longPressLocation) {
-//
-//                var task = UITextField()
-//                let alert = UIAlertController(title: "Modify Item", message: "", preferredStyle: .alert)
-//
-//                let action = UIAlertAction(title: "Modify", style: .default) { (action) in
-//                    self.todoItems[pressedIndexPath.row].setValue("\(task.text ?? "")", forKey: "title")
-//                    self.saveItems()
-//
-//                }
-//                alert.addTextField { (alertTextField) in
-//                    task = alertTextField
-//                    task.text = "\(self.todoItems[pressedIndexPath.row].title)"
-//                }
-//
-//                alert.addAction(action)
-//
-//                present(alert, animated: true, completion: nil)
-//
-//            }
-//        }
-//    }
-    
+    // calling func in superclass and overriding it to allow delete of item.
+    override func updateModel(at indexPath: IndexPath) {
+        if let item = todoItems?[indexPath.row] {
+            do {
+                try realm.write {
+                    realm.delete(item)
+                }
+            } catch {
+                print("Error deleting item, \(error)")
+            }
+        }
+    }
 }
 // MARK: - Search Bar methods
 

@@ -8,22 +8,29 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
 
 class CategoryViewController: SwipeTableViewController {
 
     let realm = try! Realm()
     
-    var categories: Results<Category>? // Instead of forced unwrap !, make categories and optional ?
+    var categories: Results<Category>? // Instead of forced unwrap !, make categories an optional ?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+//        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)) // location of the realm data file
         
         loadCategories()
         
-        tableView.rowHeight = 80.0
+        tableView.rowHeight = 60.0
+        
+        tableView.separatorStyle = .none // removes the grey line between cells
+        
+        self.navigationController?.hidesNavigationBarHairline = true // hides the hairline on Navigation Bar
+        
+        
         
     }
 
@@ -40,7 +47,23 @@ class CategoryViewController: SwipeTableViewController {
         
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
-        cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added Yet"
+        if let category = categories?[indexPath.row] {
+            
+            cell.textLabel?.text = category.name
+            
+            guard let categoryColor = UIColor(hexString: category.cellColor) else { fatalError()}
+            
+            cell.backgroundColor = categoryColor
+            
+            cell.textLabel?.textColor = ContrastColorOf(categoryColor, returnFlat: true)
+            
+        }
+        
+    
+
+        
+        
+
         
         return cell
     }
@@ -114,6 +137,10 @@ override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: Inde
         let newCategory = Category() // saves new category and insert into Realm
         
         newCategory.name = textField.text!
+        
+        newCategory.cellColor = UIColor.randomFlat.hexValue()
+        
+//        textField.text!.textColor = UIColor(contrastingBlackorWhiteColorOn:UIColor!, isFlat: true)
         
         self.save(category: newCategory)
         

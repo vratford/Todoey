@@ -14,7 +14,13 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
 
-    
+        tableView.rowHeight = 60.0
+        
+        tableView.separatorStyle = .none // removes the grey line between cells
+        
+        self.navigationController?.hidesNavigationBarHairline = true // hides the hairline on Navigation Bar
+        
+        
     }
     
     // TableView Datasource Methods
